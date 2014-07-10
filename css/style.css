@@ -217,7 +217,18 @@ td { vertical-align: top; }
 
 
 
+body {
+  background: rgb(64,194,182);
+}
 
+#matrix {
+  background: rgb(60,60,60);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -300px;
+  margin-left: -300px;
+}
 
 
 
