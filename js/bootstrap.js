@@ -1,5 +1,26 @@
+$.get( "http://api.kwielford.com/meta/mood.json", function( data ) {
+    var currentMood = data.mood;
+    var currentFace = currentMood.face;
+
+    console.log(currentFace);
+
+    function printElement( elem ) {
+
+        for (var i = 0; i < elem.length; i++) {
+           console.log(elem[i]);
+        }
+
+        var array = [elem];
+        console.log(array);
+    }
+
+    currentFace.forEach( printElement );
+
+    alert( "Load was performed." );
+});
+
 $(function(){
-		
+
     var canvas = document.getElementById('matrix'),
         context = canvas.getContext('2d');
 
@@ -35,6 +56,7 @@ $(function(){
             ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0',]
         ],
     ];
+
 
     var data = [
         [
@@ -321,8 +343,7 @@ $(function(){
         }
 
     })();
-    
-    
+
 });
 
 
