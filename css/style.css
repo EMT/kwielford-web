@@ -220,17 +220,18 @@ td { vertical-align: top; }
 body {
   /*background: rgb(64,194,182);*/
   text-align: center;
+  background: rgb(90,203,153);
 }
 
 .casing {
-  background: rgb(64,194,182);
+  background: transparent;
   margin: 5% auto 0;
   padding: 20px 20px 120px 20px;
   display: inline-block;
 }
 
 #matrix {
-  background: rgb(60,60,60);
+  background: transparent;
 }
 
 
