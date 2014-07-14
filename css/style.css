@@ -244,6 +244,14 @@ body {
 
 
 
+.sunny,.rainy {
+  display: none;
+}
+
+.visible {
+  display: inline-block;
+}
+
 .metric {
   margin: 2em 0;
 }

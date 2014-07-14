@@ -56,7 +56,10 @@ $(function(){
 
         if (currentTemperature >= 50) {
             $('p .mood').append(', warm');
-        };        
+            $('.sunny').addClass('visible');
+        } else {
+            $('.rainy').addClass('visible');
+        }
 
         // Sociability 
 
