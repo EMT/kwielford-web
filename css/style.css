@@ -236,9 +236,34 @@ body {
 
 
 
+.metric {
+  margin: 2em 0;
+}
 
+.metric p {
+  margin: 0;
+}
 
+.bar {
+  height: 30px;
+  width: 100%;
+  background: rgba(255,255,255,0.3);
+  position: relative;
+}
 
+.progress {
+  background: rgba(255,255,255,1);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+-webkit-transition: all 1500ms cubic-bezier(0.215, 0.610, 0.355, 1.000); 
+   -moz-transition: all 1500ms cubic-bezier(0.215, 0.610, 0.355, 1.000); 
+     -o-transition: all 1500ms cubic-bezier(0.215, 0.610, 0.355, 1.000); 
+        transition: all 1500ms cubic-bezier(0.215, 0.610, 0.355, 1.000); /* easeOutCubic */
+}
 
 
 

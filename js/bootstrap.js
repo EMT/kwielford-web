@@ -29,6 +29,9 @@ $(function(){
             $('.stressed').html('not that stressed.');
         };
 
+        $('.stress-meter .progress').css('width',currentStress+'%');
+        
+
         // Thirst 
 
         if (currentThirst >= 50) {
@@ -37,11 +40,17 @@ $(function(){
             $('.thirsty').html(' He is also not that thirsty.');
         };
 
+        $('.thirst-meter .progress').css('width',currentThirst+'%');
+
+
         // Energy 
 
         if (currentEnergy >= 50) {
-            $('.mood').append(', energetic ,')
+            $('p .mood').append(', energetic')
         };
+
+        $('.energy-meter .progress').css('width',currentEnergy+'%');
+
 
         // Face
 
