@@ -3,8 +3,32 @@
 $(function(){
 
     $.get( "http://api.kwielford.com/meta/mood.json", function( data ) {
-        var currentMood = data.mood;
-        var currentFace = currentMood.face;
+
+        var currentMood = data.mood.mood;
+        var currentFace = data.mood.face;
+        var currentEnergy = data.mood.metrics.energy;
+        var currentStress = data.mood.metrics.stress;
+        var currentThirst = data.mood.metrics.thirst;
+        var currentTemperature = data.mood.metrics.temperature;
+        var currentSociability = data.mood.metrics.sociability;
+
+        console.log(currentSociability + ' - ' + currentStress + ' - ' + currentEnergy + ' - ' + currentMood + ' - ' + currentTemperature + ' - ' + currentThirst);
+
+        $('.mood').html(currentMood);
+        $('.energy').html(currentEnergy);
+        $('.stress').html(currentStress);
+        $('.thirst').html(currentThirst);
+        $('.temperature').html(currentTemperature);
+        $('.sociability').html(currentSociability);
+
+        // Stressed
+
+        if (currentStress >= 50) {
+            $('.stressed').html('very stressed');
+        } else {
+            $('.stressed').html('not that stressed');
+        };
+
 
         for (var i = 0, len = currentFace.length; i < len; i ++) {
             currentFace[i] = currentFace[i].split('');
