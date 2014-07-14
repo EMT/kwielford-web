@@ -100,22 +100,29 @@ var divs = $('.casing');
 
 $(window).on('mousewheel', function(e) {
 
-
+    // deltaY = Scroll direction normalised across browsers
+    // if is scrolling up remove -3% from top style 
     if(e.deltaY > 0) {
       i-=3
       if ( i > -3) { divs.css({ 'top' : ( '-'+i+'%') }) };
     } else  {
+    // Otherwise add +3% to the top style.
       i+=3
       if ( i < 103) {divs.css({ 'top' : ( '-'+i+'%') }) };
     }
+    // Limited to within 0 - 100 range.
 
+
+    // When the overlay is fully hidden you can then scroll the container.
     if ( i >= 100 ) {
         $('.container').css('overflow','auto');
     } else {
         $('.container').css('overflow','hidden');
+        // Reset the scroll on the container as this can get out of sync if you scroll up and down alot.
         $('.container').scrollTop(0);
     }
 
+    // Reset i if the user keeps scrolling up.
     if ( i < 0 ) {
         i = 0;
     }
