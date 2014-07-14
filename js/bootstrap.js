@@ -24,11 +24,26 @@ $(function(){
         // Stressed
 
         if (currentStress >= 50) {
-            $('.stressed').html('very stressed');
+            $('.stressed').html('very stressed.');
         } else {
-            $('.stressed').html('not that stressed');
+            $('.stressed').html('not that stressed.');
         };
 
+        // Thirst 
+
+        if (currentThirst >= 50) {
+            $('.thirsty').html(' He is also quite thirsty.');
+        } else {
+            $('.thirsty').html(' He is also not that thirsty.');
+        };
+
+        // Energy 
+
+        if (currentEnergy >= 50) {
+            $('.mood').append(', energetic ,')
+        };
+
+        // Face
 
         for (var i = 0, len = currentFace.length; i < len; i ++) {
             currentFace[i] = currentFace[i].split('');
