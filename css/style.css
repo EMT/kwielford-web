@@ -215,10 +215,18 @@ td { vertical-align: top; }
    ========================================================================== */
 
 
-
+@font-face {
+  font-family: 'Neuzeit';
+  src: url('../fonts/neuzeit-book.svg#svgNeuzeit') format('svg'); 
+  src: url('../fonts/neuzeit-book.eot'); /* IE9 Compat Modes */
+  src: url('../fonts/neuzeit-book.eot?#iefix') format('embedded-opentype'), 
+       url('../fonts/neuzeit-book.woff') format('woff'), 
+       url('../fonts/neuzeit-book.ttf')  format('truetype');
+}
 
 body {
   /*background: rgb(64,194,182);*/
+  font-family: 'Neuzeit', helvetica, sans-serif;
   text-align: center;
   background: rgb(90,203,153);
 }
