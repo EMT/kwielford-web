@@ -54,7 +54,7 @@ $(function(){
 
         // Temperature 
 
-        if (currentTemperature >= 50) {
+        if (currentTemperature >= 51) {
             $('p .mood').append(', warm');
             $('.sunny').addClass('visible');
         } else {
@@ -94,6 +94,35 @@ $(function(){
 });
 
 
+var divs = $('.casing');
+    var i = 0;
+
+
+$(window).on('mousewheel', function(e) {
+
+
+    if(e.deltaY > 0) {
+      i-=3
+      if ( i > -3) { divs.css({ 'top' : ( '-'+i+'%') }) };
+    } else  {
+      i+=3
+      if ( i < 103) {divs.css({ 'top' : ( '-'+i+'%') }) };
+    }
+
+    if ( i >= 100 ) {
+        $('.container').css('overflow','auto');
+    } else {
+        $('.container').css('overflow','hidden');
+        $('.container').scrollTop(0);
+    }
+
+    if ( i < 0 ) {
+        i = 0;
+    }
+
+
+});
+
 
 var matrix = {
 
@@ -118,8 +147,19 @@ var matrix = {
         matrix.animationCompleted = false;
         matrix.lastStep = 0;
 
+                // shim layer with setTimeout fallback
+        window.requestAnimFrame = (function(){
+          return  window.requestAnimationFrame       ||
+                  window.webkitRequestAnimationFrame ||
+                  window.mozRequestAnimationFrame    ||
+                  function( callback ){
+                    window.setTimeout(callback, 1000 / 60);
+                  };
+        })();
+
+
         // Start the animation
-        window.requestAnimationFrame(matrix.animationStep);
+        window.requestAnimFrame(matrix.animationStep);
     },
 
     animationStep: function() {
@@ -153,7 +193,7 @@ var matrix = {
         }
 
         if (!matrix.animationCompleted) {
-            window.requestAnimationFrame(matrix.animationStep);
+            window.requestAnimFrame(matrix.animationStep);
         }
     },
 

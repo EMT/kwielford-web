@@ -228,20 +228,59 @@ body {
   /*background: rgb(64,194,182);*/
   font-family: 'Neuzeit', helvetica, sans-serif;
   text-align: center;
-  background: rgb(90,203,153);
+/*  background: rgb(90,203,153);*/
+overflow: hidden;
+}
+
+html,body {
+  height: 100%;
 }
 
 .casing {
-  background: transparent;
-  margin: 5% auto 0;
-  padding: 20px 20px 120px 20px;
+  background: rgb(90,203,153);
+  margin: auto 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  z-index: 60;  
+  padding: 20px 20px 20px 20px;
   display: inline-block;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 
 #matrix {
   background: transparent;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
 }
 
+
+.container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  overflow: auto;
+  background: rgb(64,194,182);
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  padding: 40px;
+}
+
+.wrapper {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+}
 
 
 .sunny,.rainy {
