@@ -14,6 +14,7 @@ $(function(){
 
         console.log(currentSociability + ' - ' + currentStress + ' - ' + currentEnergy + ' - ' + currentMood + ' - ' + currentTemperature + ' - ' + currentThirst);
 
+
         $('.mood').html(currentMood);
         $('.energy').html(currentEnergy);
         $('.stress').html(currentStress);
@@ -30,7 +31,7 @@ $(function(){
         };
 
         $('.stress-meter .progress').css('width',currentStress+'%');
-        
+
 
         // Thirst 
 
@@ -46,11 +47,22 @@ $(function(){
         // Energy 
 
         if (currentEnergy >= 50) {
-            $('p .mood').append(', energetic')
+            $('p .mood').append(', energetic');
         };
 
         $('.energy-meter .progress').css('width',currentEnergy+'%');
 
+        // Temperature 
+
+        if (currentTemperature >= 50) {
+            $('p .mood').append(', warm');
+        };        
+
+        // Sociability 
+
+        if (currentSociability <= 50) {
+            $('.about').append("<p>Kwielford dosn't want to talk right now.</p>");
+        };
 
         // Face
 
