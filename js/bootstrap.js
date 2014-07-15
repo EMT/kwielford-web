@@ -147,8 +147,19 @@ var timing = 1500;
         fromTop = 102;
         return false;
     });
+var lastY;
 
 $(window).on('mousewheel touchmove', function(e) {
+
+     var currentY = e.originalEvent.touches[0].clientY;
+         if(currentY > lastY){
+          fromTop-=3
+          if ( fromTop > -3) { div.css({ 'top' : ( '-'+fromTop+'%') }) };
+         } else {
+          fromTop+=3
+          if ( fromTop < 103) {div.css({ 'top' : ( '-'+fromTop+'%') }) };
+         }
+     lastY = currentY
 
     // if is scrolling up remove -3% from top style 
     if(e.deltaY > 0) {
