@@ -61,7 +61,7 @@ $(function(){
             $('.thirsty').html(' He is also not that thirsty.');
         };
 
-        $('.thirst-meter .progress').css('width',currentThirst+'%');
+        $('.thirst-meter .progress').css('height',currentThirst+'%');
 
 
         // Energy 
