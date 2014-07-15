@@ -7,7 +7,7 @@ $(function(){
         var currentMood = data.mood.mood;
         var currentFace = data.mood.face;
         var currentEnergy = data.mood.metrics.energy;
-        var currentStress = 60;
+        var currentStress = data.mood.metrics.stress;
         var currentThirst = data.mood.metrics.thirst;
         var currentTemperature = data.mood.metrics.temperature;
         var currentSociability = data.mood.metrics.sociability;
@@ -39,9 +39,9 @@ $(function(){
                 var stressDegree = currentStress;
 
                 if ( i && (i % 2 === 0)) {
-                    $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(stressDegree+degreeChange)+"deg)");
+                    $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(Number(stressDegree)+degreeChange)+"deg)");
                 } else {
-                    $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(stressDegree-degreeChange)+"deg)");
+                    $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(Number(stressDegree)-degreeChange)+"deg)");
                 }
             }, 1000);
 
