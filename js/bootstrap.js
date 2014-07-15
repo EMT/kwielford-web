@@ -113,13 +113,14 @@ $(function(){
 
 var div = $('.casing');
 var i = 0;
+var timing = 1500;
 
     $('.reveal').on('click', function(){
         div.css({ 'top' : ( '-101%') });
-        div.css({ 'transition' : 'all 1.5s ease-in-out'});
+        div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
                 setTimeout(function(){
             div.css({ 'transition' : 'all 0s ease-in-out'});
-        },1500);
+        },timing);
         i = 102;
         return false;
     });
