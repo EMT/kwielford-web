@@ -12,10 +12,6 @@ $(function(){
         var currentTemperature = data.mood.metrics.temperature;
         var currentSociability = data.mood.metrics.sociability;
 
-        console.log(currentSociability + ' - ' + currentStress + ' - ' + currentEnergy + ' - ' + currentMood + ' - ' + currentTemperature + ' - ' + currentThirst);
-
-        var visible = false;
-
         $('.mood').html(currentMood);
         $('.energy').html(currentEnergy);
         $('.stress').html(currentStress);
@@ -31,23 +27,22 @@ $(function(){
             $('.stressed').html('not that stressed.');
         };
 
-        $('.stress-meter .progress').css('width',currentStress+'%');
-
             // Stress-o-meter
+
             $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+currentStress+"deg)");
-            // Every second update the degree by +1 or -1 to give it a bit of small random movement similar to a real dial.
+            // Every second update the degree by +1 or -2  to give it a bit of small random movement similar to a real dial.
             // Needs some tweaking, currently looks a bit floating and not very convincing.
                             
             setInterval(function(){ 
-                  var degreeChange = Math.floor(Math.random() * 2) + 1
-                  var stressDegree = currentStress;
-                  i++
-                  if ( i && (i % 2 === 0)) {
+                i++
+                var degreeChange = Math.floor(Math.random() * 2) + 1
+                var stressDegree = currentStress;
+
+                if ( i && (i % 2 === 0)) {
                     $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(stressDegree+degreeChange)+"deg)");
-                  } else {
+                } else {
                     $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(stressDegree-degreeChange)+"deg)");
-                  }
-            
+                }
             }, 1000);
 
         // Thirst 
@@ -108,24 +103,37 @@ $(function(){
     });
 
 
+
+
 });
 
 
-var divs = $('.casing');
-    var i = 0;
+// Internal reveal.
+// Note: deltaY = Scroll direction normalised across browsers
 
+var div = $('.casing');
+var i = 0;
+
+    $('.reveal').on('click', function(){
+        div.css({ 'top' : ( '-101%') });
+        div.css({ 'transition' : 'all 1.5s ease-in-out'});
+                setTimeout(function(){
+            div.css({ 'transition' : 'all 0s ease-in-out'});
+        },1500);
+        i = 102;
+        return false;
+    });
 
 $(window).on('mousewheel', function(e) {
 
-    // deltaY = Scroll direction normalised across browsers
     // if is scrolling up remove -3% from top style 
     if(e.deltaY > 0) {
       i-=3
-      if ( i > -3) { divs.css({ 'top' : ( '-'+i+'%') }) };
+      if ( i > -3) { div.css({ 'top' : ( '-'+i+'%') }) };
     } else  {
     // Otherwise add +3% to the top style.
       i+=3
-      if ( i < 103) {divs.css({ 'top' : ( '-'+i+'%') }) };
+      if ( i < 103) {div.css({ 'top' : ( '-'+i+'%') }) };
     }
     // Limited to within 0 - 100 range.
 
@@ -133,7 +141,6 @@ $(window).on('mousewheel', function(e) {
     // When the overlay is fully hidden you can then scroll the container.
     if ( i >= 100 ) {
         $('.container').css('overflow','auto');
-        var visible = true;
     } else {
         $('.container').css('overflow','hidden');
         // Reset the scroll on the container as this can get out of sync if you scroll up and down alot.
