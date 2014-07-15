@@ -96,9 +96,9 @@ $(function(){
         var canvas = document.getElementById('matrix'),
             context = canvas.getContext('2d');
 
-        matrix.animateIn(canvas, currentFace);
+        // matrix.animateIn(canvas, currentFace);
 
-        var tweet = matrix.createTextMatrix("Great to see our friends SparkAndMettle get a mention here. Also AppsforGoodCDI http://fldwrk.co/1jHXX0X ");
+        var text = matrix.createTextMatrix("Great to see our friends SparkAndMettle get a mention here. Also AppsforGoodCDI http://fldwrk.co/1jHXX0X ");
         counter = 0;
 
         function animloop(){
@@ -106,7 +106,7 @@ $(function(){
 
             counter++;
             if (counter % parseInt(matrix.scrollInterval * 60) == 0){
-            matrixData = matrix.scrollData(tweet);
+            matrixData = matrix.scrollData(text);
 
             matrix.draw(
                 canvas, 
@@ -122,6 +122,27 @@ $(function(){
 
         //uncomment the below to sroll some text
         // animloop();
+
+        var text = matrix.createTextMatrix(getTime());
+        function clock(){
+            requestAnimationFrame(clock);
+
+            counter++;
+            if (counter % parseInt(matrix.scrollInterval * 60) == 0){
+                text = matrix.createTextMatrix(getTime());
+                matrix.draw(
+                    canvas, 
+                    text, 
+                    10, 
+                    {
+                        1: 'rgba(255,255,255,1)', 
+                        0: 'rgba(255,255,255,0.3)'
+                    }
+                );
+            }
+        }
+
+        clock();
         
     });
 
@@ -396,3 +417,19 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+function getTime() {
+    var now = new Date();
+    var h = now.getHours();
+    var m = now.getMinutes();
+    var s = now.getSeconds();
+    return timeString = String(h) + ":" + String(m) + ":" + String(padZero(s));
+}
+
+function padZero(num) {
+    if (num < 10) { 
+        return "0" + String(num);
+    }
+    else {
+        return String(num);
+    }
+}
