@@ -422,7 +422,7 @@ function getTime() {
     var h = now.getHours();
     var m = now.getMinutes();
     var s = now.getSeconds();
-    return timeString = String(h) + ":" + String(m) + ":" + String(padZero(s));
+    return timeString = String(padZero(h)) + ":" + String(padZero(m)) + ":" + String(padZero(s));
 }
 
 function padZero(num) {
