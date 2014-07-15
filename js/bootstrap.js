@@ -7,13 +7,14 @@ $(function(){
         var currentMood = data.mood.mood;
         var currentFace = data.mood.face;
         var currentEnergy = data.mood.metrics.energy;
-        var currentStress = data.mood.metrics.stress;
+        var currentStress = 60;
         var currentThirst = data.mood.metrics.thirst;
         var currentTemperature = data.mood.metrics.temperature;
         var currentSociability = data.mood.metrics.sociability;
 
         console.log(currentSociability + ' - ' + currentStress + ' - ' + currentEnergy + ' - ' + currentMood + ' - ' + currentTemperature + ' - ' + currentThirst);
 
+        var visible = false;
 
         $('.mood').html(currentMood);
         $('.energy').html(currentEnergy);
@@ -32,6 +33,15 @@ $(function(){
 
         $('.stress-meter .progress').css('width',currentStress+'%');
 
+            // Stress-o-meter
+            $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+currentStress+"deg)");
+            // Every second update the degree by +1 or -1 to give it a bit of small random movement similar to a real dial.
+            // Needs some tweaking, currently looks a bit floating and not very convincing.
+            setInterval(function(){ 
+                  var degreeChange = Math.round(Math.random()) * 2 - 1
+                  var stressDegree = currentStress;
+                  $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(stressDegree+degreeChange)+"deg)");
+            }, 1000);
 
         // Thirst 
 
@@ -116,6 +126,7 @@ $(window).on('mousewheel', function(e) {
     // When the overlay is fully hidden you can then scroll the container.
     if ( i >= 100 ) {
         $('.container').css('overflow','auto');
+        var visible = true;
     } else {
         $('.container').css('overflow','hidden');
         // Reset the scroll on the container as this can get out of sync if you scroll up and down alot.
