@@ -152,53 +152,77 @@ $(function(){
 });
 
 
-// Internal reveal.
-// Note: deltaY = Scroll direction normalised across browsers
+    $(document).on('scroll', function() {
 
-var div = $('.casing');
-var fromTop = 0;
-var timing = 1500;
+        var bheight = $('.main').height(),
+            percent = 5,
+            hpercent = bheight - percent,
+            header = $('.container');
 
-    $('.reveal').on('click', function(){
-        div.css({ 'top' : ( '-101%') });
-        div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
-                setTimeout(function(){
-            div.css({ 'transition' : 'all 0s ease-in-out'});
-        },timing);
-        fromTop = 102;
-        return false;
+        if($(window).scrollTop() + $(window).height() > $(document).height() - 1) {
+            header.css("overflow", "auto");
+            $('body').css("overflow", "hidden");
+
+        } else {
+            header.css("overflow", "hidden");
+            $('body').css("overflow", "auto");
+        };
     });
 
-$(window).on('mousewheel', function(e) {
+    $('.container').on('scroll', function() {
+        if ( $(this).scrollTop() < 1 ) {
+            $(this).css("overflow", "hidden");
+            $('body').css("overflow", "auto");
+        }
+    });
 
-    // if is scrolling up remove -3% from top style 
-    if(e.deltaY > 0) {
-      fromTop-=3
-      if ( fromTop > -3) { div.css({ 'top' : ( '-'+fromTop+'%') }) };
-    } else  {
-    // Otherwise add +3% to the top style.
-      fromTop+=3
-      if ( fromTop < 103) {div.css({ 'top' : ( '-'+fromTop+'%') }) };
-    }
-    // Limited to within 0 - 100 range.
+// // Internal reveal.
+// // Note: deltaY = Scroll direction normalised across browsers
+
+// var div = $('.casing');
+// var fromTop = 0;
+// var timing = 1500;
+
+//     $('.reveal').on('click', function(){
+//         div.css({ 'top' : ( '-101%') });
+//         div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
+//                 setTimeout(function(){
+//             div.css({ 'transition' : 'all 0s ease-in-out'});
+//         },timing);
+//         fromTop = 102;
+//         return false;
+//     });
+
+// $(window).on('mousewheel', function(e) {
+
+//     // if is scrolling up remove -3% from top style 
+//     if(e.deltaY > 0) {
+//       fromTop-=3
+//       if ( fromTop > -3) { div.css({ 'top' : ( '-'+fromTop+'%') }) };
+//     } else  {
+//     // Otherwise add +3% to the top style.
+//       fromTop+=3
+//       if ( fromTop < 103) {div.css({ 'top' : ( '-'+fromTop+'%') }) };
+//     }
+//     // Limited to within 0 - 100 range.
 
 
-    // When the overlay is fully hidden you can then scroll the container.
-    if ( fromTop >= 100 ) {
-        $('.container').css('overflow','auto');
-    } else {
-        $('.container').css('overflow','hidden');
-        // Reset the scroll on the container as this can get out of sync if you scroll up and down alot.
-        $('.container').scrollTop(0);
-    }
+//     // When the overlay is fully hidden you can then scroll the container.
+//     if ( fromTop >= 100 ) {
+//         $('.container').css('overflow','auto');
+//     } else {
+//         $('.container').css('overflow','hidden');
+//         // Reset the scroll on the container as this can get out of sync if you scroll up and down alot.
+//         $('.container').scrollTop(0);
+//     }
 
-    // Reset i if the user keeps scrolling up.
-    if ( fromTop < 0 ) {
-        fromTop = 0;
-    }
+//     // Reset i if the user keeps scrolling up.
+//     if ( fromTop < 0 ) {
+//         fromTop = 0;
+//     }
 
 
-});
+// });
 
 
 var matrix = {
