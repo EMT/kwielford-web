@@ -1,4 +1,12 @@
-
+// shim layer with setTimeout fallback
+window.requestAnimFrame = (function(){
+  return  window.requestAnimationFrame       ||
+          window.webkitRequestAnimationFrame ||
+          window.mozRequestAnimationFrame    ||
+          function( callback ){
+            window.setTimeout(callback, 1000 / 60);
+          };
+})();
 
 $(function(){
 
@@ -88,15 +96,30 @@ $(function(){
 
         matrix.animateIn(canvas, currentFace);
 
-        // matrix.draw(
-        //     canvas, 
-        //     currentFace, 
-        //     10, 
-        //     {
-        //         1: 'rgba(255,255,255,1)', 
-        //         0: 'rgba(255,255,255,0.3)'
-        //     }
-        // );
+        var tweet = matrix.createTextMatrix("Great to see our friends SparkAndMettle get a mention here. Also AppsforGoodCDI http://fldwrk.co/1jHXX0X ");
+        counter = 0;
+
+        function animloop(){
+            requestAnimationFrame(animloop);
+
+            counter++;
+            if (counter % parseInt(matrix.scrollInterval * 60) == 0){
+            matrixData = matrix.scrollData(tweet);
+
+            matrix.draw(
+                canvas, 
+                matrixData, 
+                10, 
+                {
+                    1: 'rgba(255,255,255,1)', 
+                    0: 'rgba(255,255,255,0.3)'
+                }
+            );
+            }
+        }
+
+        //uncomment the below to sroll some text
+        // animloop();
         
     });
 
@@ -145,6 +168,7 @@ $(window).on('mousewheel', function(e) {
 var matrix = {
 
     canvas: null,
+    width: 32,
     finalFrame: [],
     currentFrame: [],
     currentCell: [0,0],
@@ -153,6 +177,7 @@ var matrix = {
     animationCompleted: false,
     lastStep: 0,
     stepInterval: 30,
+    scrollInterval: 0.25, //seconds
 
     animateIn: function(canvas, data) {
         // Set up animation vars
@@ -164,16 +189,6 @@ var matrix = {
         matrix.animatedCells = 0;
         matrix.animationCompleted = false;
         matrix.lastStep = 0;
-
-                // shim layer with setTimeout fallback
-        window.requestAnimFrame = (function(){
-          return  window.requestAnimationFrame       ||
-                  window.webkitRequestAnimationFrame ||
-                  window.mozRequestAnimationFrame    ||
-                  function( callback ){
-                    window.setTimeout(callback, 1000 / 60);
-                  };
-        })();
 
 
         // Start the animation
@@ -220,7 +235,7 @@ var matrix = {
         context.clearRect(0, 0, canvas.width, canvas.height);
 
         var yMultiplier = canvas.height / data.length;
-        var xMultiplier = canvas.width / findLengthOfLongestArray(data);
+        var xMultiplier = canvas.width / matrix.width;
 
         for (var x = 0, xLen = data.length; x < xLen; x ++) {
             for (var y = 0, yLen = data[x].length; y < yLen; y ++) {
@@ -234,6 +249,39 @@ var matrix = {
 
             }
         }
+    },
+
+    createTextMatrix: function(text){
+        //the font only contains uppercase letters so make sure all letters are uppercase
+        text = text.toUpperCase();
+
+        //create an array of 8 strings filled with 32 zeros (32 chars is the minimum width a message can be)
+        data = Array(8);
+        for (i = 0;i<8;i++){
+            data[i] = Array(33).join("0");
+        }
+
+        //the middle 4 rows are where are text is going to be
+        data[2] = data[3] = data[4] = data[5] = "";
+
+        //write the text data
+        for (j = 0 ; j < text.length ; j++){
+            spacing = (j == text.length -1) ? "000" : "0";
+            if (text[j] == " ") spacing = "";
+            for (k = 2 ; k <= 5 ; k++){
+                data[k] += font[text[j]][k-2] + spacing;
+            }
+        }
+
+        //pad any unfilled rows with zeros
+        for (i = 2;i<7;i++){
+            if (data[i].length < 32){
+                data[i] += Array(33 - data[i].length).join("0");
+            }
+        }
+
+        return data;
+
     },
 
     circle: function(context, x, y, radius, color) {
@@ -269,6 +317,15 @@ var matrix = {
             }
         }
         return false;
+    },
+
+    scrollData: function(data){
+        
+        for (i = 0;i<data.length;i++){
+            data[i] = data[i].substr(1) + data[i].substr(0,1);
+        }
+
+        return data;
     }
 }
 
