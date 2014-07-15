@@ -37,10 +37,17 @@ $(function(){
             $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+currentStress+"deg)");
             // Every second update the degree by +1 or -1 to give it a bit of small random movement similar to a real dial.
             // Needs some tweaking, currently looks a bit floating and not very convincing.
+                            
             setInterval(function(){ 
-                  var degreeChange = Math.round(Math.random()) * 2 - 1
+                  var degreeChange = Math.floor(Math.random() * 2) + 1
                   var stressDegree = currentStress;
-                  $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(stressDegree+degreeChange)+"deg)");
+                  i++
+                  if ( i && (i % 2 === 0)) {
+                    $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(stressDegree+degreeChange)+"deg)");
+                  } else {
+                    $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(stressDegree-degreeChange)+"deg)");
+                  }
+            
             }, 1000);
 
         // Thirst 
