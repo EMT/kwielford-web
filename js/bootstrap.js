@@ -159,7 +159,7 @@ $(function(){
             hpercent = bheight - percent,
             header = $('.container');
 
-        if($(window).scrollTop() + $(window).height() > $(document).height() - 1) {
+        if($(window).scrollTop() + $(window).height() >= $(document).height() - 1) {
             header.css("overflow", "auto");
             $('body').css("overflow", "hidden");
 
@@ -170,7 +170,7 @@ $(function(){
     });
 
     $('.container').on('scroll', function() {
-        if ( $(this).scrollTop() < 1 ) {
+        if ( $(this).scrollTop() <= 1 ) {
             $(this).css("overflow", "hidden");
             $('body').css("overflow", "auto");
         }

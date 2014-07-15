@@ -258,6 +258,7 @@ html,body {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 /*  box-shadow: 0px 6px 5px rgba(0,0,0,0.2);*/
+-webkit-transform: translate3d(0,0,0);
 }
 
 #matrix {
@@ -283,6 +284,7 @@ html,body {
   -moz-box-sizing: border-box;
   padding: 40px;
   height: 100%; position:fixed; bottom:0; width:100%; color:white;
+  -webkit-transform: translate3d(0,0,0);
 }
 
 .wrapper {
