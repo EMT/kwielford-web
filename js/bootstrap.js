@@ -148,7 +148,7 @@ var timing = 1500;
         return false;
     });
 
-$(window).on('mousewheel touchmove', function(e) {
+$(window).on('mousewheel', function(e) {
 
     // if is scrolling up remove -3% from top style 
     if(e.deltaY > 0) {
