@@ -61,7 +61,7 @@ $(function(){
             $('.thirsty').html(' He is also not that thirsty.');
         };
 
-        $('.thirst-meter .progress').css('width',currentThirst+'%');
+        $('.thirst-meter .progress').css('height',currentThirst+'%');
 
 
         // Energy 
@@ -156,7 +156,7 @@ $(function(){
 // Note: deltaY = Scroll direction normalised across browsers
 
 var div = $('.casing');
-var i = 0;
+var fromTop = 0;
 var timing = 1500;
 
     $('.reveal').on('click', function(){
@@ -165,7 +165,7 @@ var timing = 1500;
                 setTimeout(function(){
             div.css({ 'transition' : 'all 0s ease-in-out'});
         },timing);
-        i = 102;
+        fromTop = 102;
         return false;
     });
 
@@ -173,18 +173,18 @@ $(window).on('mousewheel', function(e) {
 
     // if is scrolling up remove -3% from top style 
     if(e.deltaY > 0) {
-      i-=3
-      if ( i > -3) { div.css({ 'top' : ( '-'+i+'%') }) };
+      fromTop-=3
+      if ( fromTop > -3) { div.css({ 'top' : ( '-'+fromTop+'%') }) };
     } else  {
     // Otherwise add +3% to the top style.
-      i+=3
-      if ( i < 103) {div.css({ 'top' : ( '-'+i+'%') }) };
+      fromTop+=3
+      if ( fromTop < 103) {div.css({ 'top' : ( '-'+fromTop+'%') }) };
     }
     // Limited to within 0 - 100 range.
 
 
     // When the overlay is fully hidden you can then scroll the container.
-    if ( i >= 100 ) {
+    if ( fromTop >= 100 ) {
         $('.container').css('overflow','auto');
     } else {
         $('.container').css('overflow','hidden');
@@ -193,8 +193,8 @@ $(window).on('mousewheel', function(e) {
     }
 
     // Reset i if the user keeps scrolling up.
-    if ( i < 0 ) {
-        i = 0;
+    if ( fromTop < 0 ) {
+        fromTop = 0;
     }
 
 
