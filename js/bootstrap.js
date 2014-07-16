@@ -8,8 +8,95 @@ window.requestAnimFrame = (function(){
           };
 })();
 
-$(function(){
 
+$(function(){
+    update();
+});
+
+setInterval(function(){
+    update();   
+},20000);
+
+$(document).ready(function(){
+    var datWidth = $(window).innerWidth() /1.5;
+    $('#matrix').width(datWidth);
+})
+
+$(window).on('resize', function(){
+    var datWidth = $(window).innerWidth() /1.5;
+    $('#matrix').width(datWidth);
+});
+
+// // Internal reveal.
+// // Note: deltaY = Scroll direction normalised across browsers
+
+// Media query size.
+var mediumWidth = 800;
+
+var div = $('.casing');
+var fromTop = 0;
+var timing = 1500;
+
+    $('.reveal').on('click', function(){
+        div.css({ 'top' : ( '-101%') });
+        div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
+        setTimeout(function(){
+            div.css({ 'transition' : '' });
+        },timing);
+        fromTop = 102;
+        return false;
+    });
+
+    $('.hide').on('click', function(){
+        div.css({ 'top' : ( '0%') });
+        div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
+        setTimeout(function(){
+            div.css({ 'transition' : '' });
+        },timing);
+        fromTop = 0;
+        return false;
+    });
+
+$(window).on('mousewheel', function(e) {
+
+    // if is scrolling up remove -3% from top style 
+    if(e.deltaY > 0) {
+      fromTop-=3
+      if ( fromTop > -3) { div.css({ 'top' : ( '-'+fromTop+'%') }) };
+    } else  {
+    // Otherwise add +3% to the top style.
+      fromTop+=3
+      if ( fromTop < 103) {div.css({ 'top' : ( '-'+fromTop+'%') }) };
+    }
+    // Limited to within 0 - 100 range.
+
+
+    // When the overlay is fully hidden you can then scroll the container.
+    if ( fromTop >= 100 ) {
+        $('.container').css('overflow-y','auto');
+            if ($(window).innerWidth() <= mediumWidth ) {
+                $('.casing').css('display','none');
+                console.log('Test');
+            };
+    } else {
+        $('.container').css('overflow-y','hidden');
+            if ($(window).innerWidth() <= mediumWidth ) {
+                $('.casing').css('display','block');
+            };
+        // Reset the scroll on the container as this can get out of sync if you scroll up and down alot.
+        $('.container').scrollTop(0);
+    }
+
+    // Reset i if the user keeps scrolling up.
+    if ( fromTop < 0 ) {
+        fromTop = 0;
+    }
+
+
+});
+
+
+function update(){
     $.get( "http://api.kwielford.com/meta/mood.json", function( data ) {
 
         var currentMood = data.mood.mood;
@@ -39,7 +126,7 @@ $(function(){
 
             $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+currentStress+"deg)");
             // Every second update the degree by +1 or -2  to give it a bit of small random movement similar to a real dial.
-            // Needs some tweaking, currently looks a bit floating and not very convincing.
+            // Needs some tweaking, currently looks a bit floaty and not very convincing.
                             
             setInterval(function(){ 
                 i++
@@ -84,7 +171,7 @@ $(function(){
         // Sociability 
 
         if (currentSociability <= 50) {
-            $('.about').append("<p>Kwielford dosn't want to talk right now.</p>");
+            $('.social').html("Kwielford dosn't want to talk right now.");
         };
 
         // Face
@@ -96,7 +183,7 @@ $(function(){
         var canvas = document.getElementById('matrix'),
             context = canvas.getContext('2d');
 
-        // matrix.animateIn(canvas, currentFace);
+        matrix.animateIn(canvas, currentFace);
 
         var text = matrix.createTextMatrix("Great to see our friends SparkAndMettle get a mention here. Also AppsforGoodCDI http://fldwrk.co/1jHXX0X ");
         counter = 0;
@@ -142,109 +229,11 @@ $(function(){
             }
         }
 
-        clock();
+        // clock();
         
     });
 
-
-
-
-});
-
-
-    // $(document).on('scroll mousewheel touchmove touchstart', function() {
-
-    //     var bheight = $('.main').height(),
-    //         percent = 5,
-    //         hpercent = bheight - percent,
-    //         header = $('.container');
-
-    //     if($(window).scrollTop() + $(window).height() == $(document).height()) {
-    //         header.css("overflow", "auto");
-    //         $('body').css("overflow", "hidden");
-    //         console.log('hi')
-    //     } else {
-    //         header.css("overflow", "hidden");
-    //         $('body').css("overflow", "auto");
-    //     };
-    // });
-
-    // $('.container').on('scroll', function() {
-    //     if ( $(this).scrollTop() <= 1 ) {
-    //         console.log($(this).scrollTop);
-    //         $(this).css("overflow", "hidden");
-    //         $('body').css("overflow", "auto");
-    //     }
-    // });
-
-// // Internal reveal.
-// // Note: deltaY = Scroll direction normalised across browsers
-
-// Media query size.
-var mediumWidth = 800;
-
-var div = $('.casing');
-var fromTop = 0;
-var timing = 1500;
-
-    $('.reveal').on('click', function(){
-        div.css({ 'top' : ( '-101%') });
-        div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
-                setTimeout(function(){
-            div.css({ 'transition' : '' });
-        },timing);
-        fromTop = 102;
-        return false;
-    });
-
-    $('.hide').on('click', function(){
-        div.css({ 'top' : ( '0%') });
-        div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
-                setTimeout(function(){
-            div.css({ 'transition' : '' });
-        },timing);
-        fromTop = 0;
-        return false;
-    });
-
-$(window).on('mousewheel', function(e) {
-
-    // if is scrolling up remove -3% from top style 
-    if(e.deltaY > 0) {
-      fromTop-=3
-      if ( fromTop > -3) { div.css({ 'top' : ( '-'+fromTop+'%') }) };
-    } else  {
-    // Otherwise add +3% to the top style.
-      fromTop+=3
-      if ( fromTop < 103) {div.css({ 'top' : ( '-'+fromTop+'%') }) };
-    }
-    // Limited to within 0 - 100 range.
-
-
-    // When the overlay is fully hidden you can then scroll the container.
-    if ( fromTop >= 100 ) {
-        $('.container').css('overflow-y','scroll');
-            if ($(window).innerWidth() <= mediumWidth ) {
-                $('.casing').css('display','none');
-                console.log('Test');
-            };
-    } else {
-        $('.container').css('overflow-y','hidden');
-            if ($(window).innerWidth() <= mediumWidth ) {
-                $('.casing').css('display','block');
-            };
-        // Reset the scroll on the container as this can get out of sync if you scroll up and down alot.
-        $('.container').scrollTop(0);
-    }
-
-    // Reset i if the user keeps scrolling up.
-    if ( fromTop < 0 ) {
-        fromTop = 0;
-    }
-
-
-});
-
+};
 
 var matrix = {
 

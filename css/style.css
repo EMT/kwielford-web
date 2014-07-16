@@ -236,6 +236,10 @@ html,body {
   height: 100%;
 }
 
+.about {
+  text-align: center;
+  font-size: 1.1em;
+}
 
 
 .casing {
@@ -251,7 +255,7 @@ html,body {
   display: inline-block;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-shadow: 0px 6px 5px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 8px rgba(0,0,0,0.1);
   -webkit-transform: translate3d(0,0,0);
 
 }
@@ -276,14 +280,14 @@ html,body {
   background: rgb(64,194,182);
   box-sizing: border-box;
   -moz-box-sizing: border-box;
-  padding: 5%;
-    overflow-y: scroll; /* has to be scroll, not auto */
+  padding: 4em 1em 2em 1em;
+    overflow-y: auto; /* has to be scroll, not auto */
   -webkit-overflow-scrolling: touch;
 }
 
 .wrapper {
   width: 90%;
-  max-width: 800px;
+  max-width: 1100px;
   margin: 0 auto;
   text-align: left;
 }
@@ -401,7 +405,7 @@ html,body {
   display: block;
   position: absolute;
   left: 50%;
-  bottom: 5%;
+  bottom: 2em;
   opacity: 0.5;
   -webkit-transform: translate(-50%);
   transform: translate(-50%);
@@ -416,7 +420,7 @@ html,body {
   display: block;
   position: absolute;
   left: 50%;
-  top: 5%;
+  top: 2em;
   opacity: 0.5;
   -webkit-transform: translate(-50%);
   transform: translate(-50%);
@@ -434,6 +438,12 @@ html,body {
 @media screen and (max-width : 800px) {
   #matrix {
     width: 600px;
+  }
+}
+
+@media screen and (max-width : 600px) {
+  #matrix {
+    width: 300px;
   }
 }
 
