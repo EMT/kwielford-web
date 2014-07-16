@@ -56,8 +56,12 @@ setInterval(function(){
 
 // Responsive resizing of the canvas ( Temp - this just streches it if its bigger than inital size )
 $(window).on('resize load', function(){
-    var datWidth = $(window).innerWidth() /1.5;
-    $('#matrix').width(datWidth);
+    if ($(window).innerWidth() <= 800) {
+        var matrixWidth = $(window).innerWidth() /1.5;
+        $('#matrix').width(matrixWidth);
+    } else {
+        $('#matrix').width('auto');
+    }
 });
 
 
