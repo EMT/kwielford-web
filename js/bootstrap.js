@@ -197,6 +197,16 @@ var timing = 1500;
         return false;
     });
 
+    $('.hide').on('click', function(){
+        div.css({ 'top' : ( '0%') });
+        div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
+                setTimeout(function(){
+            div.css({ 'transition' : '' });
+        },timing);
+        fromTop = 0;
+        return false;
+    });
+
 $(window).on('mousewheel', function(e) {
 
     // if is scrolling up remove -3% from top style 
