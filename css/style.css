@@ -229,6 +229,7 @@ body {
   font-family: 'Neuzeit', helvetica, sans-serif;
   text-align: center;
 /*  background: rgb(90,203,153);*/
+overflow: hidden;
 }
 
 html,body {
@@ -236,29 +237,23 @@ html,body {
 }
 
 
-.reveal-me-holder {height: 100%;} 
-
-.main {
-  height: 100%;
-}
 
 .casing {
   background: rgb(90,203,153);
-  position: relative;
-  height: 100%; position:relative; z-index: 2;
-/*  margin: auto 0;
+  margin: auto 0;
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   height: 100%;
-  z-index: 60;  */
+  z-index: 60;  
   padding: 20px 20px 20px 20px;
-/*  display: inline-block;*/
+  display: inline-block;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
-/*  box-shadow: 0px 6px 5px rgba(0,0,0,0.2);*/
--webkit-transform: translate3d(0,0,0);
+  box-shadow: 0px 6px 5px rgba(0,0,0,0.2);
+  -webkit-transform: translate3d(0,0,0);
+
 }
 
 #matrix {
@@ -273,18 +268,17 @@ html,body {
 
 
 .container {
-/*  position: absolute;
+  position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  top: 0;*/
-/*  overflow: auto;*/
+  top: 0;
   background: rgb(64,194,182);
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   padding: 40px;
-  height: 100%; position:fixed; bottom:0; width:100%; color:white;
-  -webkit-transform: translate3d(0,0,0);
+    overflow-y: scroll; /* has to be scroll, not auto */
+  -webkit-overflow-scrolling: touch;
 }
 
 .wrapper {
@@ -399,6 +393,19 @@ html,body {
 }
 
 
+.reveal {
+  width: 35px;
+  height: 20px;
+  background: url(../images/down.png) no-repeat center;
+  background-size: cover;
+  display: block;
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  -webkit-transform: translate(-50%);
+  transform: translate(-50%);
+  -moz-transform: translate(-50%);
+}
 
 
 
@@ -407,7 +414,12 @@ html,body {
    ========================================================================== */
    
 
-
+   
+@media screen and (max-width : 800px) {
+  #matrix {
+    width: 600px;
+  }
+}
 
 
 
