@@ -3,7 +3,7 @@
 // Source
 var apiSource = "http://api.kwielford.com/meta/mood.json";
 // Refresh rate (in seconds)
-var apiRefreshRate = 20;
+var apiRefreshRate = 60;
 
 // === Metrics Variables ===
 
