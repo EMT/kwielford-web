@@ -1,9 +1,13 @@
+// === API Variables ===
+
 // Source
 var apiSource = "http://api.kwielford.com/meta/mood.json";
 // Refresh rate (in seconds)
 var apiRefreshRate = 20;
 
-// Stress Levels
+// === Metrics Variables ===
+
+// Stress Breakpoints
 var stressBreakpoint = 50;
 // Thirst Breakpoints
 var thirstBreakpoint = 50;
@@ -13,6 +17,17 @@ var tempBreakpoint = 50;
 var sociabilityBreakpoint = 50;
 // Energy Breakpoints
 var energyBreakpoint = 50;
+
+// === Media Queries ===
+
+// Medium Width
+var mediumWidth = 800;
+
+// === Reveal Transition === 
+
+// Duration
+var timing = 1500;
+
 
 
 // shim layer with setTimeout fallback
@@ -25,10 +40,12 @@ window.requestAnimFrame = (function(){
           };
 })();
 
+
 // Api Initialised
 $(function(){
     updateInfo();
 });
+
 
 // Api Refresh
 var refreshRate = apiRefreshRate * 1000;
@@ -37,25 +54,16 @@ setInterval(function(){
 },refreshRate);
 
 
-$(document).ready(function(){
-    var datWidth = $(window).innerWidth() /1.5;
-    $('#matrix').width(datWidth);
-})
-
-$(window).on('resize', function(){
+// Responsive resizing of the canvas ( Temp - this just streches it if its bigger than inital size )
+$(window).on('resize load', function(){
     var datWidth = $(window).innerWidth() /1.5;
     $('#matrix').width(datWidth);
 });
 
-// // Internal reveal.
-// // Note: deltaY = Scroll direction normalised across browsers
 
-// Media query size.
-var mediumWidth = 800;
-
-var div = $('.casing');
+// Reveal Buttons
 var fromTop = 0;
-var timing = 1500;
+var div = $('.casing');
 
     $('.reveal').on('click', function(){
         div.css({ 'top' : ( '-101%') });
@@ -77,6 +85,9 @@ var timing = 1500;
         return false;
     });
 
+
+// Top Reveal.
+// Note: deltaY = Scroll direction normalised across browsers
 $(window).on('mousewheel', function(e) {
 
     // if is scrolling up remove -3% from top style 
@@ -88,8 +99,7 @@ $(window).on('mousewheel', function(e) {
       fromTop+=3
       if ( fromTop < 103) {div.css({ 'top' : ( '-'+fromTop+'%') }) };
     }
-    // Limited to within 0 - 100 range.
-
+    // Limited to within -3 - 103 range.
 
     // When the overlay is fully hidden you can then scroll the container.
     if ( fromTop >= 100 ) {
@@ -111,9 +121,8 @@ $(window).on('mousewheel', function(e) {
     if ( fromTop < 0 ) {
         fromTop = 0;
     }
-
-
 });
+
 
 
 function updateInfo(){
@@ -152,6 +161,7 @@ function updateInfo(){
                 var degreeChange = Math.floor(Math.random() * 2) + 1
                 var stressDegree = currentStress;
 
+                // Every other iteration it adds or deletes - keeps it closer to the original number.
                 if ( i && (i % 2 === 0)) {
                     $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(Number(stressDegree)+degreeChange)+"deg)");
                 } else {
