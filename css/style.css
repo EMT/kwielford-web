@@ -236,6 +236,19 @@ html,body {
   height: 100%;
 }
 
+html.interface, .interface body{
+  height:auto;
+  min-height:100%;
+  overflow: visible;
+  background:rgb(90,203,153);
+}
+
+h2{
+  color:#fff;
+  font-size: 3em;
+  margin-bottom: 1em;
+}
+
 .about {
   text-align: center;
   font-size: 1.1em;
@@ -258,6 +271,21 @@ html,body {
   box-shadow: 0px 8px 8px rgba(0,0,0,0.1);
   -webkit-transform: translate3d(0,0,0);
 
+}
+
+.interface-wrapper{
+  text-align: center;
+}
+
+.interface-wrapper h2{
+  display: inline-block;
+  padding:1em;
+  cursor: pointer;
+  color:rgba(255,255,255,0.3);
+}
+
+.interface-wrapper h2:hover, .interface-wrapper h2.selected{
+  color:rgba(255,255,255,1);
 }
 
 #matrix {
