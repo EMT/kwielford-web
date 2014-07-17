@@ -462,18 +462,7 @@ h2{
    ========================================================================== */
    
 
-   
-@media screen and (max-width : 800px) {
-  #matrix {
-    width: 600px;
-  }
-}
 
-@media screen and (max-width : 600px) {
-  #matrix {
-    width: 300px;
-  }
-}
 
 
 

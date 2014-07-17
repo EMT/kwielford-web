@@ -1,3 +1,35 @@
+// === API Variables ===
+
+// Source
+var apiSource = "http://api.kwielford.com/meta/mood.json";
+// Refresh rate (in seconds)
+var apiRefreshRate = 60;
+
+// === Metrics Variables ===
+
+// Stress Breakpoints
+var stressBreakpoint = 50;
+// Thirst Breakpoints
+var thirstBreakpoint = 50;
+// Temperature Breakpoints
+var tempBreakpoint = 50;
+// Sociability
+var sociabilityBreakpoint = 50;
+// Energy Breakpoints
+var energyBreakpoint = 50;
+
+// === Media Queries ===
+
+// Medium Width
+var mediumWidth = 800;
+
+// === Reveal Transition === 
+
+// Duration
+var timing = 1500;
+
+
+
 // shim layer with setTimeout fallback
 window.requestAnimFrame = (function(){
   return  window.requestAnimationFrame       ||
@@ -9,33 +41,33 @@ window.requestAnimFrame = (function(){
 })();
 
 
+// Api Initialised
 $(function(){
-    update();
+    updateInfo();
 });
 
+
+// Api Refresh
+var refreshRate = apiRefreshRate * 1000;
 setInterval(function(){
-    update();   
-},20000);
+    updateInfo();   
+},refreshRate);
 
-$(document).ready(function(){
-    var datWidth = $(window).innerWidth() /1.5;
-    $('#matrix').width(datWidth);
-})
 
-$(window).on('resize', function(){
-    var datWidth = $(window).innerWidth() /1.5;
-    $('#matrix').width(datWidth);
+// Responsive resizing of the canvas ( Temp - this just streches it if its bigger than inital size )
+$(window).on('resize load', function(){
+    if ($(window).innerWidth() <= 800) {
+        var matrixWidth = $(window).innerWidth() /1.5;
+        $('#matrix').width(matrixWidth);
+    } else {
+        $('#matrix').width('auto');
+    }
 });
 
-// // Internal reveal.
-// // Note: deltaY = Scroll direction normalised across browsers
 
-// Media query size.
-var mediumWidth = 800;
-
-var div = $('.casing');
+// Reveal Buttons
 var fromTop = 0;
-var timing = 1500;
+var div = $('.casing');
 
     $('.reveal').on('click', function(){
         div.css({ 'top' : ( '-101%') });
@@ -57,6 +89,9 @@ var timing = 1500;
         return false;
     });
 
+
+// Top Reveal.
+// Note: deltaY = Scroll direction normalised across browsers
 $(window).on('mousewheel', function(e) {
 
     // if is scrolling up remove -3% from top style 
@@ -68,8 +103,7 @@ $(window).on('mousewheel', function(e) {
       fromTop+=3
       if ( fromTop < 103) {div.css({ 'top' : ( '-'+fromTop+'%') }) };
     }
-    // Limited to within 0 - 100 range.
-
+    // Limited to within -3 - 103 range.
 
     // When the overlay is fully hidden you can then scroll the container.
     if ( fromTop >= 100 ) {
@@ -91,13 +125,12 @@ $(window).on('mousewheel', function(e) {
     if ( fromTop < 0 ) {
         fromTop = 0;
     }
-
-
 });
 
 
-function update(){
-    $.get( "http://api.kwielford.com/meta/mood.json", function( data ) {
+
+function updateInfo(){
+    $.get( apiSource, function( data ) {
 
         var currentMood = data.mood.mood;
         var currentFace = data.mood.face;
@@ -125,14 +158,14 @@ function update(){
             // Stress-o-meter
 
             $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+currentStress+"deg)");
+
             // Every second update the degree by +1 or -2  to give it a bit of small random movement similar to a real dial.
-            // Needs some tweaking, currently looks a bit floaty and not very convincing.
-                            
             setInterval(function(){ 
                 i++
                 var degreeChange = Math.floor(Math.random() * 2) + 1
                 var stressDegree = currentStress;
 
+                // Every other iteration it adds or deletes - keeps it closer to the original number.
                 if ( i && (i % 2 === 0)) {
                     $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(Number(stressDegree)+degreeChange)+"deg)");
                 } else {
@@ -142,7 +175,7 @@ function update(){
 
         // Thirst 
 
-        if (currentThirst >= 50) {
+        if (currentThirst >= thirstBreakpoint) {
             $('.thirsty').html(' He is also quite thirsty.');
         } else {
             $('.thirsty').html(' He is also not that thirsty.');
@@ -153,7 +186,7 @@ function update(){
 
         // Energy 
 
-        if (currentEnergy >= 50) {
+        if (currentEnergy >= energyBreakpoint) {
             $('p .mood').append(', energetic');
         };
 
@@ -161,7 +194,7 @@ function update(){
 
         // Temperature 
 
-        if (currentTemperature >= 51) {
+        if (currentTemperature >= tempBreakpoint) {
             $('p .mood').append(', warm');
             $('.sunny').addClass('visible');
         } else {
@@ -170,7 +203,7 @@ function update(){
 
         // Sociability 
 
-        if (currentSociability <= 50) {
+        if (currentSociability <= sociabilityBreakpoint) {
             $('.social').html("Kwielford dosn't want to talk right now.");
         };
 
