@@ -10,12 +10,11 @@ $(".printer-form").submit(function(e){
 
 $(document).ready(function () {
 	$('.new-to-do').on('click',function(){
-		$('ul').append('<li><p contenteditable="true">Test</p></li>')
+		$('ul').append('<li><p contenteditable="true">Test</p></li>');
 	});
 
 	$('.add').on('click', function(){
-		var test = $('.content').html();
-		console.log(test);
-		$('#content').val(test)
+		var form = $('.content').html();
+		$('#content').val(form);
 	});
 });

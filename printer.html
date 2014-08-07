@@ -29,22 +29,68 @@
 <div class="to-do-area">
 	<div class="paper">
 	  <div class="content">
-	    <h1>To Do</h1>
+	  <style>
+body ul {
+  padding: 0;
+  word-wrap: break-word;
+}
+
+body h1 {
+  text-align: center;
+}
+
+body li {
+  padding: 0.2em 0;
+  border-top: 3px dashed black;
+  border-bottom: 3px dashed black;
+  margin-top: -3px;
+  position: relative;
+  text-align: left;
+}
+
+body li:after {
+  content: '';
+  display: block;
+  width: 1.6em;
+  height: 1.6em;
+  border: 3px dashed black;
+  border-radius: 5px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+body li p {
+  width: 80%;
+  outline: 0;
+}
+
+body {
+  font-size: 25px;
+}
+
+body .line-break {
+  width: 1005;
+  border-top: 3px solid black;
+  margin: 2em 0;
+}
+
+  </style>
+	    <h1 contenteditable="true">To Do</h1>
 	    <ul>
 	    	<li>
 	    		<p contenteditable="true">Edit me</p>
 	    	</li>
 	    </ul>
+	
 
+</div>
+</div>
 	    <button class="new-to-do">Add New</button>
 	    <button class="add">Print</button>
-	
-		<div class="line-break"></div>
-
-	  </div>
-	</div>
-
-</div class="to-do-area">
+</div>
 
 	<script src="js/jquery.min.js"></script>
 	<script src="js/printer.js"></script>
