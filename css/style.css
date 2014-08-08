@@ -543,13 +543,21 @@ h2{
   position: absolute;
   top: 50%;
   left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   -webkit-touch-callout: none;
--webkit-user-select: none;
--khtml-user-select: none;
--moz-user-select: none;
--ms-user-select: none;
-user-select: none;
+  -moz-touch-callout: none;
+  -ms-touch-callout: none;
+  -o-touch-callout: none;
+  touch-callout: none;
+  user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+  user-select: none;
+  user-select: none;
 }
 
 .face-grid input[type="checkbox"] {
@@ -560,20 +568,23 @@ user-select: none;
   visibility: hidden;
 }
 
-
 .face-grid input[type="checkbox"]:after {
-    content: '';
-    display: block;
-    height: 20px;
-    width: 20px;
-    background: rgba(255,255,255,0.3);
-    visibility: visible;
-    border-radius: 20px;
-    transition: all 0.15s ease-out;
+  content: '';
+  display: block;
+  height: 20px;
+  width: 20px;
+  background: rgba(255,255,255,0.3);
+  visibility: visible;
+  border-radius: 20px;
+  -webkit-transition: all 0.15s ease-out;
+  -moz-transition: all 0.15s ease-out;
+  -ms-transition: all 0.15s ease-out;
+  -o-transition: all 0.15s ease-out;
+  transition: all 0.15s ease-out;
 }
 
 .face-grid input[type="checkbox"]:checked:after {
- background: rgba(255,255,255,1);
+  background: rgba(255,255,255,1);
 }
 
 .face-grid {
@@ -581,7 +592,8 @@ user-select: none;
   display: table;
 }
 
-.save-face, .face-saved {
+.save-face,
+.face-saved {
   text-align: center;
   display: block;
   text-decoration: none;
@@ -595,6 +607,10 @@ user-select: none;
   position: absolute;
   bottom: -2em;
   left: 50%;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
   transform: translateX(-50%);
 }
 
