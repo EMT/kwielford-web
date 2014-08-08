@@ -2,8 +2,10 @@
 
 // Source
 var apiSource = "http://api.kwielford.com/meta/mood.json";
+
+var faceSource = "http://api.kwielford.com/meta/face.json";
 // Refresh rate (in seconds)
-var apiRefreshRate = 60;
+var apiRefreshRate = 20;
 
 // === Metrics Variables ===
 
@@ -133,7 +135,6 @@ function updateInfo(){
     $.get( apiSource, function( data ) {
 
         var currentMood = data.mood.mood;
-        var currentFace = data.mood.face;
         var currentEnergy = data.mood.metrics.energy;
         var currentStress = data.mood.metrics.stress;
         var currentThirst = data.mood.metrics.thirst;
@@ -209,6 +210,15 @@ function updateInfo(){
 
         // Face
 
+
+        // clock();
+        
+    });
+
+    $.get( faceSource, function( data ) {
+
+        var currentFace = data.face.face;
+
         for (var i = 0, len = currentFace.length; i < len; i ++) {
             currentFace[i] = currentFace[i].split('');
         }
@@ -261,11 +271,7 @@ function updateInfo(){
                 );
             }
         }
-
-        // clock();
-        
     });
-
 };
 
 var matrix = {
