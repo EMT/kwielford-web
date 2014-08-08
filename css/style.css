@@ -51,9 +51,6 @@ body { margin: 0; font-size: 0.875em; line-height: 1.3077; }
    ========================================================================== */
 
 a { color: #00e; }
-a:visited { color: #551a8b; }
-a:hover { color: #06e; }
-a:focus { outline: thin dotted; }
 
 /* Improve readability when focused and hovered in all browsers: h5bp.com/h */
 a:hover, a:active { outline: 0; }
@@ -538,6 +535,68 @@ h2{
   margin: 0 auto;
   background-color: white; }
 
+
+
+/* Face Styles */
+
+.face-grid {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+
+.face-grid input[type="checkbox"] {
+  position: relative;
+  height: 20px;
+  margin: 2px;
+  width: 20px;
+  visibility: hidden;
+}
+
+
+.face-grid input[type="checkbox"]:after {
+    content: '';
+    display: block;
+    height: 20px;
+    width: 20px;
+    background: rgba(255,255,255,0.3);
+    visibility: visible;
+    border-radius: 20px;
+    transition: all 0.15s ease-out;
+}
+
+.face-grid input[type="checkbox"]:checked:after {
+ background: rgba(255,255,255,1);
+}
+
+.face-grid {
+  margin: 2em auto;
+  display: table;
+}
+
+.save-face, .face-saved {
+  text-align: center;
+  display: block;
+  text-decoration: none;
+  margin: 1em auto;
+  color: rgb(255,255,255);
+  font-family: sans-serif;
+}
+
+.face-saved {
+  display: none;
+  position: absolute;
+  bottom: -2em;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
 /* ==|== media queries ======================================================
 
