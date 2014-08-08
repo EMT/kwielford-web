@@ -543,20 +543,14 @@ h2{
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 80%;
   -webkit-transform: translate(-50%, -50%);
   -moz-transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   -o-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  -webkit-touch-callout: none;
-  -moz-touch-callout: none;
-  -ms-touch-callout: none;
-  -o-touch-callout: none;
-  touch-callout: none;
-  user-select: none;
+  -webkit-user-select: none;
   -khtml-user-select: none;
-  user-select: none;
-  user-select: none;
   user-select: none;
 }
 
@@ -581,6 +575,11 @@ h2{
   -ms-transition: all 0.15s ease-out;
   -o-transition: all 0.15s ease-out;
   transition: all 0.15s ease-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .face-grid input[type="checkbox"]:checked:after {
