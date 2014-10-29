@@ -77,17 +77,23 @@ var topVisible = true;
                 slideFaceUp();
             };
         }
-
     });
 
 
 var lastY;
 $(document).bind('touchmove', function (e){
+    if (topVisible == true ) {
+        $('body').unbind('touchmove');
+    }
      var currentY = e.originalEvent.touches[0].clientY;
-     if(currentY > lastY){
-         slideFaceUp();
+     if(currentY < lastY){
+        if ( topVisible == true) {
+            slideFaceDown();
+        };
      }else{
-         slideFaceDown();
+         if ( topVisible == false && $('.container').scrollTop() == 0) {
+            slideFaceUp();
+         };
      }
      lastY = currentY;
 });
@@ -103,6 +109,7 @@ function slideFaceUp() {
     div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
     topVisible = true;    
 }
+
 
     // $('.hide').on('click', function(){
     //     div.css({ 'top' : ( '0%') });
