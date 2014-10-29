@@ -70,11 +70,11 @@ var topVisible = true;
     $(window).on('mousewheel', function(e) {
         if(e.deltaY < 0) {
             if ( topVisible == true) {
-                slideFaceUp();
+                slideFaceDown();
             };
         } else {
                 if ( topVisible == false && $('.container').scrollTop() == 0) {
-                slideFaceDown();
+                slideFaceUp();
             };
         }
     });
@@ -88,35 +88,28 @@ $(document).bind('touchmove', function (e){
      var currentY = e.originalEvent.touches[0].clientY;
      if(currentY < lastY){
         if ( topVisible == true) {
-            slideFaceUp();
+            slideFaceDown();
         };
      }else{
          if ( topVisible == false && $('.container').scrollTop() == 0) {
-            slideFaceDown();
+            slideFaceUp();
          };
      }
      lastY = currentY;
 });
 
-function slideFaceUp() {
+function slideFaceDown() {
     div.css({ 'top' : ( '-101%') });
     div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
-    $('.container').addClass('scroll');
     topVisible = false;
 }
 
-function slideFaceDown() {
+function slideFaceUp() {
     div.css({ 'top' : ( '0%') });
     div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
-    $('.container').removeClass('scroll');
     topVisible = true;    
 }
 
-document.body.addEventListener("ontouchstart", function(event) {
-  if(document.getElementById("container").scrollTop > 0) return;
-  event.preventDefault();
-  event.stopPropagation();
-}, false);
 
     // $('.hide').on('click', function(){
     //     div.css({ 'top' : ( '0%') });

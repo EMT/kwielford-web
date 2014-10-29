@@ -251,10 +251,6 @@ h2{
   font-size: 1.1em;
 }
 
-.scroll {
-    -webkit-overflow-scrolling: touch;
-}
-
 
 .casing {
   background: rgb(90,203,153);
@@ -271,7 +267,6 @@ h2{
   -moz-box-sizing: border-box;
   box-shadow: 0px 8px 8px rgba(0,0,0,0.1);
   -webkit-transform: translate3d(0,0,0);
-  transform: translate3d(0, 0, 0);
 
 }
 
@@ -311,8 +306,8 @@ h2{
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   padding: 4em 1em 2em 1em;
-    overflow-y: auto; 
-  -webkit-transform: translate3d(0, 0, 0)
+    overflow-y: auto; /* has to be scroll, not auto */
+  -webkit-overflow-scrolling: touch;
 }
 
 .wrapper {
