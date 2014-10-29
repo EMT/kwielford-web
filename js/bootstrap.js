@@ -2,22 +2,17 @@
 
 // Source
 var apiSource = "http://api.kwielford.com/meta/mood.json";
-
 var faceSource = "http://api.kwielford.com/meta/face.json";
+
 // Refresh rate (in seconds)
 var apiRefreshRate = 20;
 
 // === Metrics Variables ===
 
-// Stress Breakpoints
 var stressBreakpoint = 50;
-// Thirst Breakpoints
 var thirstBreakpoint = 50;
-// Temperature Breakpoints
 var tempBreakpoint = 50;
-// Sociability
 var sociabilityBreakpoint = 50;
-// Energy Breakpoints
 var energyBreakpoint = 50;
 
 // === Media Queries ===
@@ -28,7 +23,7 @@ var mediumWidth = 800;
 // === Reveal Transition === 
 
 // Duration
-var timing = 1500;
+var timing = 1200;
 
 
 
@@ -70,64 +65,92 @@ $(window).on('resize load', function(){
 // Reveal Buttons
 var fromTop = 0;
 var div = $('.casing');
+var topVisible = true;
 
-    $('.reveal').on('click', function(){
-        div.css({ 'top' : ( '-101%') });
-        div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
-        setTimeout(function(){
-            div.css({ 'transition' : '' });
-        },timing);
-        fromTop = 102;
-        return false;
-    });
+    $(window).on('mousewheel', function(e) {
+        if(e.deltaY < 0) {
+            if ( topVisible == true) {
+                slideFaceDown();
+            };
+        } else {
+                if ( topVisible == false && $('.container').scrollTop() == 0) {
+                slideFaceUp();
+            };
+        }
 
-    $('.hide').on('click', function(){
-        div.css({ 'top' : ( '0%') });
-        div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
-        setTimeout(function(){
-            div.css({ 'transition' : '' });
-        },timing);
-        fromTop = 0;
-        return false;
     });
 
 
-// Top Reveal.
-// Note: deltaY = Scroll direction normalised across browsers
-$(window).on('mousewheel', function(e) {
-
-    // if is scrolling up remove -3% from top style 
-    if(e.deltaY > 0) {
-      fromTop-=3
-      if ( fromTop > -3) { div.css({ 'top' : ( '-'+fromTop+'%') }) };
-    } else  {
-    // Otherwise add +3% to the top style.
-      fromTop+=3
-      if ( fromTop < 103) {div.css({ 'top' : ( '-'+fromTop+'%') }) };
-    }
-    // Limited to within -3 - 103 range.
-
-    // When the overlay is fully hidden you can then scroll the container.
-    if ( fromTop >= 100 ) {
-        $('.container').css('overflow-y','auto');
-            if ($(window).innerWidth() <= mediumWidth ) {
-                $('.casing').css('display','none');
-                console.log('Test');
-            };
-    } else {
-        $('.container').css('overflow-y','hidden');
-            if ($(window).innerWidth() <= mediumWidth ) {
-                $('.casing').css('display','block');
-            };
-        // Reset the scroll on the container as this can get out of sync if you scroll up and down alot.
-        $('.container').scrollTop(0);
-    }
-
-    // Reset i if the user keeps scrolling up.
-    if ( fromTop < 0 ) {
-        fromTop = 0;
-    }
+var lastY;
+$(document).bind('touchmove', function (e){
+     var currentY = e.originalEvent.touches[0].clientY;
+     if(currentY > lastY){
+         slideFaceUp();
+     }else{
+         slideFaceDown();
+     }
+     lastY = currentY;
 });
+
+function slideFaceDown() {
+    div.css({ 'top' : ( '-101%') });
+    div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
+    topVisible = false;
+}
+
+function slideFaceUp() {
+    div.css({ 'top' : ( '0%') });
+    div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
+    topVisible = true;    
+}
+
+    // $('.hide').on('click', function(){
+    //     div.css({ 'top' : ( '0%') });
+    //     div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
+    //     setTimeout(function(){
+    //         div.css({ 'transition' : '' });
+    //     },timing);
+    //     fromTop = 0;
+    //     return false;
+    // });
+
+
+// // Top Reveal.
+// // Note: deltaY = Scroll direction normalised across browsers
+// $(window).on('mousewheel', function(e) {
+
+//     // if is scrolling up remove -3% from top style 
+//     if(e.deltaY > 0) {
+//       fromTop-=3
+//       if ( fromTop > -3) { div.css({ 'top' : ( '-'+fromTop+'%') }) };
+//     } else  {
+//     // Otherwise add +3% to the top style.
+//       fromTop+=3
+//       if ( fromTop < 103) {div.css({ 'top' : ( '-'+fromTop+'%') }) };
+//     }
+//     // Limited to within -3 - 103 range.
+
+//     // When the overlay is fully hidden you can then scroll the container.
+//     if ( fromTop >= 100 ) {
+//         $('.container').css('overflow-y','auto');
+//             if ($(window).innerWidth() <= mediumWidth ) {
+//                 $('.casing').css('display','none');
+//                 console.log('Test');
+//             };
+//     } else {
+//         $('.container').css('overflow-y','hidden');
+//             if ($(window).innerWidth() <= mediumWidth ) {
+//                 $('.casing').css('display','block');
+//             };
+//         // Reset the scroll on the container as this can get out of sync if you scroll up and down alot.
+//         $('.container').scrollTop(0);
+//     }
+
+//     // Reset i if the user keeps scrolling up.
+//     if ( fromTop < 0 ) {
+//         fromTop = 0;
+//     }
+// });
 
 
 
