@@ -62,22 +62,37 @@ $(window).on('resize load', function(){
 });
 
 
+function slideFaceUp() {
+    kwizFace.css({ 'top' : ( '-101%') });
+    kwizFace.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
+    topVisible = false;
+}
+
+function slideFaceDown() {
+    kwizFace.css({ 'top' : ( '0%') });
+    kwizFace.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
+    topVisible = true;    
+}
+
 // Reveal Buttons
-var div = $('.casing');
+var kwizFace = $('.casing');
 var topVisible = true;
 
-    $(window).on('mousewheel', function(e) {
-        if(e.deltaY < 0) {
-            if ( topVisible == true) {
-                slideFaceUp();
-            };
-        } else {
-                if ( topVisible == false && $('.container').scrollTop() == 0) {
-                slideFaceDown();
-            };
-        }
-    });
 
+// Desktop Face-reveal.
+$(window).on('mousewheel', function(e) {
+    if(e.deltaY < 0) {
+        if ( topVisible == true) {
+            slideFaceUp();
+        };
+    } else {
+            if ( topVisible == false && $('.container').scrollTop() == 0) {
+            slideFaceDown();
+        };
+    }
+});
+
+// Prevent page scroll when the face is visible.
 $(document).on('touchstart',function(e){
     if ( topVisible == true ) {
         e.preventDefault();
@@ -86,77 +101,24 @@ $(document).on('touchstart',function(e){
     }
 });
 
-
+// Mobile face reveal.
 var lastY;
 $(document).bind('touchmove', function (e){
      var currentY = e.originalEvent.touches[0].clientY;
      if(currentY < lastY){
         if ( topVisible == true) {
             slideFaceUp();
-            setTimeout(function(){
-                $('.container').scrollTop(0);
-            },100)
         }
     }
      lastY = currentY;
 });
 
-function slideFaceUp() {
-    div.css({ 'top' : ( '-101%') });
-    div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
-    topVisible = false;
-}
 
-function slideFaceDown() {
-    div.css({ 'top' : ( '0%') });
-    div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
-    topVisible = true;    
-}
-
-
+// Mobile face hide.
 $('.hide').on('click', function(){
     slideFaceDown();
     return false;
 });
-
-
-// // Top Reveal.
-// // Note: deltaY = Scroll direction normalised across browsers
-// $(window).on('mousewheel', function(e) {
-
-//     // if is scrolling up remove -3% from top style 
-//     if(e.deltaY > 0) {
-//       fromTop-=3
-//       if ( fromTop > -3) { div.css({ 'top' : ( '-'+fromTop+'%') }) };
-//     } else  {
-//     // Otherwise add +3% to the top style.
-//       fromTop+=3
-//       if ( fromTop < 103) {div.css({ 'top' : ( '-'+fromTop+'%') }) };
-//     }
-//     // Limited to within -3 - 103 range.
-
-//     // When the overlay is fully hidden you can then scroll the container.
-//     if ( fromTop >= 100 ) {
-//         $('.container').css('overflow-y','auto');
-//             if ($(window).innerWidth() <= mediumWidth ) {
-//                 $('.casing').css('display','none');
-//                 console.log('Test');
-//             };
-//     } else {
-//         $('.container').css('overflow-y','hidden');
-//             if ($(window).innerWidth() <= mediumWidth ) {
-//                 $('.casing').css('display','block');
-//             };
-//         // Reset the scroll on the container as this can get out of sync if you scroll up and down alot.
-//         $('.container').scrollTop(0);
-//     }
-
-//     // Reset i if the user keeps scrolling up.
-//     if ( fromTop < 0 ) {
-//         fromTop = 0;
-//     }
-// });
-
 
 
 function updateInfo(){
