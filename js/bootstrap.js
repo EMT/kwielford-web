@@ -66,12 +66,14 @@ function slideFaceUp() {
     kwizFace.css({ 'top' : ( '-101%') });
     kwizFace.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
     topVisible = false;
+    $('.hide-ribbon').addClass('slide-out');
 }
 
 function slideFaceDown() {
     kwizFace.css({ 'top' : ( '0%') });
     kwizFace.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
-    topVisible = true;    
+    topVisible = true;
+    $('.hide-ribbon').removeClass('slide-out');
 }
 
 // Reveal Buttons
