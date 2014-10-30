@@ -63,63 +63,61 @@ $(window).on('resize load', function(){
 
 
 // Reveal Buttons
-var fromTop = 0;
 var div = $('.casing');
 var topVisible = true;
 
     $(window).on('mousewheel', function(e) {
         if(e.deltaY < 0) {
             if ( topVisible == true) {
-                slideFaceDown();
+                slideFaceUp();
             };
         } else {
                 if ( topVisible == false && $('.container').scrollTop() == 0) {
-                slideFaceUp();
+                slideFaceDown();
             };
         }
     });
 
+$(document).on('touchstart',function(e){
+    if ( topVisible == true ) {
+        e.preventDefault();
+    } else {
+        return true;
+    }
+});
+
 
 var lastY;
 $(document).bind('touchmove', function (e){
-    if (topVisible == true ) {
-        $('body').unbind('touchmove');
-    }
      var currentY = e.originalEvent.touches[0].clientY;
      if(currentY < lastY){
         if ( topVisible == true) {
-            slideFaceDown();
-        };
-     }else{
-         if ( topVisible == false && $('.container').scrollTop() == 0) {
             slideFaceUp();
-         };
-     }
+            setTimeout(function(){
+                $('.container').scrollTop(0);
+            },100)
+        }
+    }
      lastY = currentY;
 });
 
-function slideFaceDown() {
+function slideFaceUp() {
     div.css({ 'top' : ( '-101%') });
     div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
     topVisible = false;
 }
 
-function slideFaceUp() {
+function slideFaceDown() {
     div.css({ 'top' : ( '0%') });
     div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
     topVisible = true;    
 }
 
 
-    // $('.hide').on('click', function(){
-    //     div.css({ 'top' : ( '0%') });
-    //     div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
-    //     setTimeout(function(){
-    //         div.css({ 'transition' : '' });
-    //     },timing);
-    //     fromTop = 0;
-    //     return false;
-    // });
+$('.hide').on('click', function(){
+    slideFaceDown();
+    return false;
+});
 
 
 // // Top Reveal.
