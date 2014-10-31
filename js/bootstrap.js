@@ -145,6 +145,21 @@ setInterval(function(){
     }
 }, 1000);
 
+function viewport() {
+    var e = window, a = 'inner';
+    if (!('innerWidth' in window )) {
+        a = 'client';
+        e = document.documentElement || document.body;
+    }
+    return { width : e[ a+'Width' ] , height : e[ a+'Height' ] };
+}
+jQuery(window).on('resize load',function(){
+    var vw = (viewport().width/50);
+    jQuery('.responsive-graph').css({
+        'font-size' : vw + 'px'
+    });
+});
+
 
 function updateInfo(){
     $.get( apiSource, function( data ) {
@@ -222,6 +237,8 @@ function updateInfo(){
         // clock();
         
     });
+
+
 
     $.get( faceSource, function( data ) {
 
