@@ -14,6 +14,7 @@ var thirstBreakpoint = 50;
 var tempBreakpoint = 50;
 var sociabilityBreakpoint = 50;
 var energyBreakpoint = 50;
+var lowEnergyBreakpoint = 20;
 
 // === Media Queries ===
 
@@ -122,16 +123,39 @@ $('.hide').on('click', function(){
     return false;
 });
 
+    
+
+// Little bit of jitter on the stress meter.
+
+// Every second update the degree by +1 or -2  to give it a bit of small random movement similar to a real dial.
+
+var b = 0;
+
+setInterval(function(){ 
+
+    b++
+    var degreeChange = Math.floor(Math.random() * 2) + 1
+    var stressDegree = currentStress;
+
+    // Every other iteration it adds or deletes - keeps it closer to the original number.
+    if ( b % 2 === 0) {
+        $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(Number(stressDegree)+degreeChange)+"deg)");
+    } else {
+        $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(Number(stressDegree)-degreeChange)+"deg)");
+    }
+}, 1000);
+
 
 function updateInfo(){
     $.get( apiSource, function( data ) {
 
         var currentMood = data.mood.mood;
-        var currentEnergy = data.mood.metrics.energy;
-        var currentStress = data.mood.metrics.stress;
-        var currentThirst = data.mood.metrics.thirst;
-        var currentTemperature = data.mood.metrics.temperature;
-        var currentSociability = data.mood.metrics.sociability;
+        // var currentEnergy = data.mood.metrics.energy;
+        currentEnergy = data.mood.metrics.energy;
+        currentStress = data.mood.metrics.stress;
+        currentThirst = data.mood.metrics.thirst;
+        currentTemperature = data.mood.metrics.temperature;
+        currentSociability = data.mood.metrics.sociability;
 
         $('.mood').html(currentMood);
         $('.energy').html(currentEnergy);
@@ -148,23 +172,9 @@ function updateInfo(){
             $('.stressed').html('not that stressed.');
         };
 
-            // Stress-o-meter
+        // Stress-o-meter
 
-            $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+currentStress+"deg)");
-
-            // Every second update the degree by +1 or -2  to give it a bit of small random movement similar to a real dial.
-            setInterval(function(){ 
-                i++
-                var degreeChange = Math.floor(Math.random() * 2) + 1
-                var stressDegree = currentStress;
-
-                // Every other iteration it adds or deletes - keeps it closer to the original number.
-                if ( i && (i % 2 === 0)) {
-                    $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(Number(stressDegree)+degreeChange)+"deg)");
-                } else {
-                    $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(Number(stressDegree)-degreeChange)+"deg)");
-                }
-            }, 1000);
+        $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+currentStress+"deg)");
 
         // Thirst 
 
@@ -183,6 +193,10 @@ function updateInfo(){
             $('p .mood').append(', energetic');
         };
 
+        if (currentEnergy <= lowEnergyBreakpoint) {
+            $('.energy-meter').addClass('low-energy')
+        }
+
         $('.energy-meter .progress').css('width',currentEnergy+'%');
 
         // Temperature 
@@ -198,7 +212,9 @@ function updateInfo(){
 
         if (currentSociability <= sociabilityBreakpoint) {
             $('.social').html("Kwielford dosn't want to talk right now.");
-        };
+        } else {
+            $('.social').html("Kwielford is happy to talk <a href='#'>here</a>.");
+        }
 
         // Face
 
