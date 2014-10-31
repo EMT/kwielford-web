@@ -2,23 +2,19 @@
 
 // Source
 var apiSource = "http://api.kwielford.com/meta/mood.json";
-
 var faceSource = "http://api.kwielford.com/meta/face.json";
+
 // Refresh rate (in seconds)
 var apiRefreshRate = 20;
 
 // === Metrics Variables ===
 
-// Stress Breakpoints
 var stressBreakpoint = 50;
-// Thirst Breakpoints
 var thirstBreakpoint = 50;
-// Temperature Breakpoints
 var tempBreakpoint = 50;
-// Sociability
 var sociabilityBreakpoint = 50;
-// Energy Breakpoints
 var energyBreakpoint = 50;
+var lowEnergyBreakpoint = 20;
 
 // === Media Queries ===
 
@@ -28,7 +24,7 @@ var mediumWidth = 800;
 // === Reveal Transition === 
 
 // Duration
-var timing = 1500;
+var timing = 1200;
 
 
 
@@ -67,79 +63,99 @@ $(window).on('resize load', function(){
 });
 
 
+function slideFaceUp() {
+    kwizFace.css({ 'top' : ( '-101%') });
+    kwizFace.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
+    topVisible = false;
+    $('.hide-ribbon').addClass('slide-out');
+}
+
+function slideFaceDown() {
+    kwizFace.css({ 'top' : ( '0%') });
+    kwizFace.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
+    topVisible = true;
+    $('.hide-ribbon').removeClass('slide-out');
+}
+
 // Reveal Buttons
-var fromTop = 0;
-var div = $('.casing');
-
-    $('.reveal').on('click', function(){
-        div.css({ 'top' : ( '-101%') });
-        div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
-        setTimeout(function(){
-            div.css({ 'transition' : '' });
-        },timing);
-        fromTop = 102;
-        return false;
-    });
-
-    $('.hide').on('click', function(){
-        div.css({ 'top' : ( '0%') });
-        div.css({ 'transition' : 'all '+timing+'ms ease-in-out'});
-        setTimeout(function(){
-            div.css({ 'transition' : '' });
-        },timing);
-        fromTop = 0;
-        return false;
-    });
+var kwizFace = $('.casing');
+var topVisible = true;
 
 
-// Top Reveal.
-// Note: deltaY = Scroll direction normalised across browsers
+// Desktop Face-reveal.
 $(window).on('mousewheel', function(e) {
-
-    // if is scrolling up remove -3% from top style 
-    if(e.deltaY > 0) {
-      fromTop-=3
-      if ( fromTop > -3) { div.css({ 'top' : ( '-'+fromTop+'%') }) };
-    } else  {
-    // Otherwise add +3% to the top style.
-      fromTop+=3
-      if ( fromTop < 103) {div.css({ 'top' : ( '-'+fromTop+'%') }) };
-    }
-    // Limited to within -3 - 103 range.
-
-    // When the overlay is fully hidden you can then scroll the container.
-    if ( fromTop >= 100 ) {
-        $('.container').css('overflow-y','auto');
-            if ($(window).innerWidth() <= mediumWidth ) {
-                $('.casing').css('display','none');
-                console.log('Test');
-            };
+    if(e.deltaY < 0) {
+        if ( topVisible == true) {
+            slideFaceUp();
+        };
     } else {
-        $('.container').css('overflow-y','hidden');
-            if ($(window).innerWidth() <= mediumWidth ) {
-                $('.casing').css('display','block');
-            };
-        // Reset the scroll on the container as this can get out of sync if you scroll up and down alot.
-        $('.container').scrollTop(0);
-    }
-
-    // Reset i if the user keeps scrolling up.
-    if ( fromTop < 0 ) {
-        fromTop = 0;
+            if ( topVisible == false && $('.container').scrollTop() == 0) {
+            slideFaceDown();
+        };
     }
 });
 
+// Prevent page scroll when the face is visible.
+$(document).on('touchstart',function(e){
+    if ( topVisible == true ) {
+        e.preventDefault();
+    } else {
+        return true;
+    }
+});
+
+// Mobile face reveal.
+var lastY;
+$(document).bind('touchmove', function (e){
+     var currentY = e.originalEvent.touches[0].clientY;
+     if(currentY < lastY){
+        if ( topVisible == true) {
+            slideFaceUp();
+        }
+    }
+     lastY = currentY;
+});
+
+
+// Mobile face hide.
+$('.hide').on('click', function(){
+    slideFaceDown();
+    return false;
+});
+
+    
+
+// Little bit of jitter on the stress meter.
+
+// Every second update the degree by +1 or -2  to give it a bit of small random movement similar to a real dial.
+
+var b = 0;
+
+setInterval(function(){ 
+
+    b++
+    var degreeChange = Math.floor(Math.random() * 2) + 1
+    var stressDegree = currentStress;
+
+    // Every other iteration it adds or deletes - keeps it closer to the original number.
+    if ( b % 2 === 0) {
+        $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(Number(stressDegree)+degreeChange)+"deg)");
+    } else {
+        $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(Number(stressDegree)-degreeChange)+"deg)");
+    }
+}, 1000);
 
 
 function updateInfo(){
     $.get( apiSource, function( data ) {
 
         var currentMood = data.mood.mood;
-        var currentEnergy = data.mood.metrics.energy;
-        var currentStress = data.mood.metrics.stress;
-        var currentThirst = data.mood.metrics.thirst;
-        var currentTemperature = data.mood.metrics.temperature;
-        var currentSociability = data.mood.metrics.sociability;
+        // var currentEnergy = data.mood.metrics.energy;
+        currentEnergy = data.mood.metrics.energy;
+        currentStress = data.mood.metrics.stress;
+        currentThirst = data.mood.metrics.thirst;
+        currentTemperature = data.mood.metrics.temperature;
+        currentSociability = data.mood.metrics.sociability;
 
         $('.mood').html(currentMood);
         $('.energy').html(currentEnergy);
@@ -156,23 +172,9 @@ function updateInfo(){
             $('.stressed').html('not that stressed.');
         };
 
-            // Stress-o-meter
+        // Stress-o-meter
 
-            $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+currentStress+"deg)");
-
-            // Every second update the degree by +1 or -2  to give it a bit of small random movement similar to a real dial.
-            setInterval(function(){ 
-                i++
-                var degreeChange = Math.floor(Math.random() * 2) + 1
-                var stressDegree = currentStress;
-
-                // Every other iteration it adds or deletes - keeps it closer to the original number.
-                if ( i && (i % 2 === 0)) {
-                    $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(Number(stressDegree)+degreeChange)+"deg)");
-                } else {
-                    $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(Number(stressDegree)-degreeChange)+"deg)");
-                }
-            }, 1000);
+        $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+currentStress+"deg)");
 
         // Thirst 
 
@@ -191,6 +193,10 @@ function updateInfo(){
             $('p .mood').append(', energetic');
         };
 
+        if (currentEnergy <= lowEnergyBreakpoint) {
+            $('.energy-meter').addClass('low-energy')
+        }
+
         $('.energy-meter .progress').css('width',currentEnergy+'%');
 
         // Temperature 
@@ -206,7 +212,9 @@ function updateInfo(){
 
         if (currentSociability <= sociabilityBreakpoint) {
             $('.social').html("Kwielford dosn't want to talk right now.");
-        };
+        } else {
+            $('.social').html("Kwielford is happy to talk <a href='#'>here</a>.");
+        }
 
         // Face
 
