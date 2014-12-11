@@ -337,7 +337,10 @@ h2{
 }
 
 .metric {
-  margin: 2em 0;
+  margin: 3em 0;
+  padding: 1em;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 
 .metric p {
@@ -393,6 +396,29 @@ h2{
   background:rgba(255,255,255,0.3);
   position: relative;
   overflow: hidden;
+  margin: 0 auto;
+}
+
+.responsive-graph {
+  position: relative;
+  width: 30em;
+  margin: 0 auto;
+}
+
+.responsive-graph:before {
+  content: 'Low';
+  position: absolute;
+  bottom: -1.5em;
+  left: 0;
+  font-size: 1rem;
+}
+
+.responsive-graph:after {
+  content: 'High';
+  position: absolute;
+  bottom: -1.5em;
+  right: 0;
+  font-size: 1rem;
 }
 
 .pointer {

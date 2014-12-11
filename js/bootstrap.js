@@ -139,9 +139,9 @@ setInterval(function(){
 
     // Every other iteration it adds or deletes - keeps it closer to the original number.
     if ( b % 2 === 0) {
-        $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(Number(stressDegree)+degreeChange)+"deg)");
+        $('.stress-o-meter .pointer').css("transform", "rotate("+(Number(stressDegree)+degreeChange)+"deg)");
     } else {
-        $('.stress-o-meter .pointer').css("-webkit-transform", "rotate("+(Number(stressDegree)-degreeChange)+"deg)");
+        $('.stress-o-meter .pointer').css("transform", "rotate("+(Number(stressDegree)-degreeChange)+"deg)");
     }
 }, 1000);
 
